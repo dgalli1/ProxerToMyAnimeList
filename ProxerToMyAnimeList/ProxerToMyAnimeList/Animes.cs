@@ -1,4 +1,5 @@
 ﻿using MALAPI;
+using System;
 
 namespace ProxerToMyAnimeList
 {
@@ -6,19 +7,48 @@ namespace ProxerToMyAnimeList
     {
         private string myProxID;
         private string myAnimeListID;
-        private string myName;
-        private MALAPI.API api;
+        private string myNameDeu;
+        private string myEpisodeStart;
+        private string myEpisodeEnd; 
 
-        private enum myStatus
+        private enum EnumMyStatus
         {
             watched, watching, willbewatched, aborted
         }
-        public Animes(string ProxID, MALAPI.API api)
+        private EnumMyStatus myStatus;
+
+
+
+        public Animes(string anime_id, string anime_name_eng, string anime_status, string anime_episodes)
         {
-            this.myProxID = ProxID;
-            this.api = api;
+            this.myProxID = anime_id;
+            this.myNameDeu = anime_name_eng; //not sure what lang this name is i guess if german exits german otherwhise eng
+            setStatus(anime_status);
+            myEpisodeStart = anime_episodes.Substring(0,anime_episodes.IndexOf("/")-1).Replace(" ","");
+            myEpisodeEnd = anime_episodes.Substring(anime_episodes.IndexOf("/")+1).Replace(" ", "");
         }
 
+        public void setStatus(string status)
+        {
+            switch(status)
+            {
+                case "Geschaut":
+                    myStatus = EnumMyStatus.watched;
+                    break;
+                case "Am Schauen":
+                    myStatus = EnumMyStatus.watching;
+                    break;
+                case "Wird noch geschaut":
+                    myStatus = EnumMyStatus.willbewatched;
+                    break;
+                case "Abgebrochen":
+                    myStatus = EnumMyStatus.aborted;
+                    break;
+                default:
+                    throw (new Exception("Unbekannter Anime Status"));
+                    break;
+            }
+        }
         public void getMyAnimeListID()
         {
             //todo perform search on my anime list with name, save id in class 
