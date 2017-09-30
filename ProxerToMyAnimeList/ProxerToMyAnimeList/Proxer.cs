@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -10,13 +11,34 @@ namespace ProxerToMyAnimeList
     {
         private static string myUserId;
         private static List<Animes> animes;
-
-        public static void getWatchlist()
+        private static string myProxerAnimeList;
+        
+        public static Boolean getWatchlist(string ProxerAnimeListUrl)
         {
+            myProxerAnimeList = ProxerAnimeListUrl;
+            WebClient wc = new WebClient();
+
+            
+
+
+            return false;
+            
             //todo parse proxer watchlist maybe i get a api key
             //todo performe a query for every single anime to get the japanese original title (i guess it will result in less errors)
-            //todo add to anime list
         }
-    
+
+        public static void export(Boolean xmlexport)
+        {
+            MALAPI.API AmimeListApi;
+            if (xmlexport)
+            {
+                AmimeListApi = new MALAPI.API();
+            }
+
+            //todo add to anime list
+
+            //new Animes(389925,)
+        }
+
     }
 }

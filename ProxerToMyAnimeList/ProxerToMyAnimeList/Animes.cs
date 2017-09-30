@@ -1,18 +1,22 @@
-﻿namespace ProxerToMyAnimeList
+﻿using MALAPI;
+
+namespace ProxerToMyAnimeList
 {
     public class Animes
     {
         private string myProxID;
         private string myAnimeListID;
         private string myName;
+        private MALAPI.API api;
+
         private enum myStatus
         {
             watched, watching, willbewatched, aborted
         }
-        public Animes(string ProxID, string Name)
+        public Animes(string ProxID, MALAPI.API api)
         {
             this.myProxID = ProxID;
-            this.myName = Name;
+            this.api = api;
         }
 
         public void getMyAnimeListID()
