@@ -15,6 +15,7 @@ namespace ProxerToMyAnimeList
         public static List<Animes> list_animes=new List<Animes>();
         private static string myProxerAnimeList;
         public static MALAPI.API myAnimeListApi;
+        public static string today = "09302017";
 
         public static Boolean getWatchlist(string ProxerAnimeListUrl)
         {
@@ -80,6 +81,15 @@ namespace ProxerToMyAnimeList
             foreach (Animes item in list_animes)
             {
                 item.AddtoMyAnimeList();
+            }
+        }
+        public static async void RemoveAll()
+        {
+            MALAPI.Dto.UserList userlist= await myAnimeListApi.GetUserListAsync();
+            foreach (MALAPI.Dto.UserAnime item in userlist.Animes)
+            {
+                
+                var wtf=await myAnimeListApi.DeleteAnime(item.SeriesId);
             }
         }
 

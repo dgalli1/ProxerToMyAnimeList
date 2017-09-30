@@ -1,5 +1,6 @@
 ﻿using MALAPI;
 using System;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace ProxerToMyAnimeList
@@ -9,12 +10,12 @@ namespace ProxerToMyAnimeList
         private string myProxID;
         private string myAnimeListID;
         private string myNameDeu;
-        private string myEpisodeStart;
-        private string myEpisodeEnd; 
+        private string myEpisodeWatchedTill;
+        private string myEpisodeTotal; 
 
         private enum EnumMyStatus
         {
-            watched, watching, willbewatched, aborted
+             watching, completed,onhold,dropped, plantowatch
         }
         private EnumMyStatus myStatus;
 
@@ -25,8 +26,8 @@ namespace ProxerToMyAnimeList
             this.myProxID = anime_id;
             this.myNameDeu = anime_name_eng; //not sure what lang this name is i guess if german exits german otherwhise eng
             setStatus(anime_status);
-            myEpisodeStart = anime_episodes.Substring(0,anime_episodes.IndexOf("/")-1).Replace(" ","");
-            myEpisodeEnd = anime_episodes.Substring(anime_episodes.IndexOf("/")+1).Replace(" ", "");
+            myEpisodeWatchedTill = anime_episodes.Substring(0,anime_episodes.IndexOf("/")-1).Replace(" ","");
+            myEpisodeTotal = anime_episodes.Substring(anime_episodes.IndexOf("/")+1).Replace(" ", "");
         }
 
         private void setStatus(string status)
@@ -34,16 +35,16 @@ namespace ProxerToMyAnimeList
             switch(status)
             {
                 case "Geschaut":
-                    myStatus = EnumMyStatus.watched;
+                    myStatus = EnumMyStatus.completed;
                     break;
                 case "Am Schauen":
                     myStatus = EnumMyStatus.watching;
                     break;
                 case "Wird noch geschaut":
-                    myStatus = EnumMyStatus.willbewatched;
+                    myStatus = EnumMyStatus.plantowatch;
                     break;
                 case "Abgebrochen":
-                    myStatus = EnumMyStatus.aborted;
+                    myStatus = EnumMyStatus.dropped;
                     break;
                 default:
                     throw (new Exception("Unbekannter Anime Status"));
@@ -54,15 +55,32 @@ namespace ProxerToMyAnimeList
         {
             //todo perform search on my anime list with name, save id in class 
         }
-        public void AddtoMyAnimeList()
+        public async void AddtoMyAnimeList()
         {
-            Task<MALAPI.Dto.SearchResult> results=Proxer.myAnimeListApi.SearchForAsync(myNameDeu);
-            results.RunSynchronously();
-            foreach (var item in results.Result.Entries)
+            MALAPI.Dto.SearchResult results=  await Proxer.myAnimeListApi.SearchForAsync(myNameDeu);
+            var entries=results.Entries;
+            Boolean found = false;
+            foreach (var item in entries)
             {
-
+                if(item.EnglishTitle.ToLower()==myNameDeu.ToLower()||item.Title.ToLower()==myNameDeu.ToLower()||item.Synonyms.ToLower()==myNameDeu.ToLower()) //this is why we need the japanese Title
+                {
+                    var Anime = new MALAPI.Dto.Anime();
+                    Anime.Status = myStatus.ToString();
+                    Anime.Episode = Int32.Parse(myEpisodeWatchedTill);
+                    Anime.DateStart = DateTime.Today;
+                    Anime.DateEnd = DateTime.Today;
+                    Anime.Priority = 0;
+                    Anime.EnableDiscussion = 0;
+                    Anime.EnableRewatching = 0;
+                    Anime.RewatchValue = 0;
+                    var add_result = await Proxer.myAnimeListApi.AddAnime(Anime, item.Id);
+                    found = true;
+                }
             }
-            Console.WriteLine("lol");
+            if(!found)
+            {
+                Console.WriteLine("fml");
+            }
             
         }
         public void generateMyAnimeListXML()

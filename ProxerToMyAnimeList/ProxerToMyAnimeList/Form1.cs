@@ -34,12 +34,13 @@ namespace ProxerToMyAnimeList
                 lb_status.Text=Proxer.list_animes.Count +" Animes wurden auf Proxer gefunden";
                 if(groupBox1.Enabled)
                 {//direct import
-                    Proxer.authenticate(tb_username.Text, tb_password.Text);
 
+                    Proxer.authenticate(tb_username.Text, tb_password.Text);
+                    Proxer.add();
                 }
                 else
                 {//xmlExport not implemented
-                    Proxer.add();
+                    Proxer.authenticate("daYMAN007", "Openfimg12");
                 }
             }
             else
@@ -47,6 +48,12 @@ namespace ProxerToMyAnimeList
                 lb_status.Text = "Error: Hast du die Richtige URL eingegeben und die Berechtigungen überprüft?";
             }
             
+        }
+
+        private void bn_delete_wholeList_Click(object sender, EventArgs e)
+        {
+            Proxer.authenticate(tb_username.Text, tb_password.Text);
+            Proxer.RemoveAll();
         }
     }
 }

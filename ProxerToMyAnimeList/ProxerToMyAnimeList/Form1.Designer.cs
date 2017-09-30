@@ -39,6 +39,7 @@
             this.label3 = new System.Windows.Forms.Label();
             this.bn_export = new System.Windows.Forms.Button();
             this.lb_status = new System.Windows.Forms.Label();
+            this.bn_delete_wholeList = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -136,11 +137,22 @@
             this.lb_status.TabIndex = 7;
             this.lb_status.Text = "label4";
             // 
+            // bn_delete_wholeList
+            // 
+            this.bn_delete_wholeList.Location = new System.Drawing.Point(477, 270);
+            this.bn_delete_wholeList.Name = "bn_delete_wholeList";
+            this.bn_delete_wholeList.Size = new System.Drawing.Size(75, 23);
+            this.bn_delete_wholeList.TabIndex = 8;
+            this.bn_delete_wholeList.Text = "bn_delete_wholeList";
+            this.bn_delete_wholeList.UseVisualStyleBackColor = true;
+            this.bn_delete_wholeList.Click += new System.EventHandler(this.bn_delete_wholeList_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(795, 321);
+            this.Controls.Add(this.bn_delete_wholeList);
             this.Controls.Add(this.lb_status);
             this.Controls.Add(this.bn_export);
             this.Controls.Add(this.cb_directImport);
@@ -170,6 +182,7 @@
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Button bn_export;
         private System.Windows.Forms.Label lb_status;
+        private System.Windows.Forms.Button bn_delete_wholeList;
     }
 }
 
