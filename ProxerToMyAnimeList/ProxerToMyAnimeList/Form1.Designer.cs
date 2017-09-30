@@ -32,18 +32,19 @@
             this.label1 = new System.Windows.Forms.Label();
             this.cb_directImport = new System.Windows.Forms.CheckBox();
             this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
-            this.textBox1 = new System.Windows.Forms.TextBox();
-            this.textBox2 = new System.Windows.Forms.TextBox();
+            this.tb_password = new System.Windows.Forms.TextBox();
+            this.tb_username = new System.Windows.Forms.TextBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.bn_export = new System.Windows.Forms.Button();
+            this.lb_status = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
             // tb_proxerWatchlist
             // 
-            this.tb_proxerWatchlist.Location = new System.Drawing.Point(155, 58);
+            this.tb_proxerWatchlist.Location = new System.Drawing.Point(155, 12);
             this.tb_proxerWatchlist.Name = "tb_proxerWatchlist";
             this.tb_proxerWatchlist.Size = new System.Drawing.Size(610, 20);
             this.tb_proxerWatchlist.TabIndex = 0;
@@ -51,7 +52,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(44, 64);
+            this.label1.Location = new System.Drawing.Point(44, 18);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(107, 13);
             this.label1.TabIndex = 1;
@@ -68,27 +69,28 @@
             this.cb_directImport.UseVisualStyleBackColor = true;
             this.cb_directImport.CheckedChanged += new System.EventHandler(this.cb_directImport_CheckedChanged);
             // 
-            // textBox1
+            // tb_password
             // 
-            this.textBox1.Location = new System.Drawing.Point(157, 64);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.PasswordChar = '*';
-            this.textBox1.Size = new System.Drawing.Size(148, 20);
-            this.textBox1.TabIndex = 3;
+            this.tb_password.Location = new System.Drawing.Point(157, 64);
+            this.tb_password.Name = "tb_password";
+            this.tb_password.PasswordChar = '*';
+            this.tb_password.Size = new System.Drawing.Size(148, 20);
+            this.tb_password.TabIndex = 3;
             // 
-            // textBox2
+            // tb_username
             // 
-            this.textBox2.Location = new System.Drawing.Point(157, 26);
-            this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(148, 20);
-            this.textBox2.TabIndex = 4;
+            this.tb_username.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.tb_username.Location = new System.Drawing.Point(157, 26);
+            this.tb_username.Name = "tb_username";
+            this.tb_username.Size = new System.Drawing.Size(148, 20);
+            this.tb_username.TabIndex = 4;
             // 
             // groupBox1
             // 
             this.groupBox1.Controls.Add(this.label2);
             this.groupBox1.Controls.Add(this.label3);
-            this.groupBox1.Controls.Add(this.textBox1);
-            this.groupBox1.Controls.Add(this.textBox2);
+            this.groupBox1.Controls.Add(this.tb_password);
+            this.groupBox1.Controls.Add(this.tb_username);
             this.groupBox1.Enabled = false;
             this.groupBox1.Location = new System.Drawing.Point(47, 132);
             this.groupBox1.Name = "groupBox1";
@@ -125,11 +127,21 @@
             this.bn_export.UseVisualStyleBackColor = true;
             this.bn_export.Click += new System.EventHandler(this.bn_export_Click);
             // 
+            // lb_status
+            // 
+            this.lb_status.AutoSize = true;
+            this.lb_status.Location = new System.Drawing.Point(47, 48);
+            this.lb_status.Name = "lb_status";
+            this.lb_status.Size = new System.Drawing.Size(35, 13);
+            this.lb_status.TabIndex = 7;
+            this.lb_status.Text = "label4";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(795, 321);
+            this.Controls.Add(this.lb_status);
             this.Controls.Add(this.bn_export);
             this.Controls.Add(this.cb_directImport);
             this.Controls.Add(this.groupBox1);
@@ -151,12 +163,13 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.CheckBox cb_directImport;
         private System.ComponentModel.BackgroundWorker backgroundWorker1;
-        private System.Windows.Forms.TextBox textBox1;
-        private System.Windows.Forms.TextBox textBox2;
+        private System.Windows.Forms.TextBox tb_password;
+        private System.Windows.Forms.TextBox tb_username;
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Button bn_export;
+        private System.Windows.Forms.Label lb_status;
     }
 }
 

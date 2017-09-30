@@ -1,5 +1,6 @@
 ﻿using MALAPI;
 using System;
+using System.Threading.Tasks;
 
 namespace ProxerToMyAnimeList
 {
@@ -28,7 +29,7 @@ namespace ProxerToMyAnimeList
             myEpisodeEnd = anime_episodes.Substring(anime_episodes.IndexOf("/")+1).Replace(" ", "");
         }
 
-        public void setStatus(string status)
+        private void setStatus(string status)
         {
             switch(status)
             {
@@ -55,11 +56,18 @@ namespace ProxerToMyAnimeList
         }
         public void AddtoMyAnimeList()
         {
+            Task<MALAPI.Dto.SearchResult> results=Proxer.myAnimeListApi.SearchForAsync(myNameDeu);
+            results.RunSynchronously();
+            foreach (var item in results.Result.Entries)
+            {
 
+            }
+            Console.WriteLine("lol");
+            
         }
         public void generateMyAnimeListXML()
         {
-            //maybe easier then implementing with the add function (and we wouldnt brutforce their server so hard)
+            //maybe easier then implementing with the add function (and we wouldnt ddos their server so hard)
         }
     }
 }

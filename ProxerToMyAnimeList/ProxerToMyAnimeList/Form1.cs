@@ -29,7 +29,24 @@ namespace ProxerToMyAnimeList
 
         private void bn_export_Click(object sender, EventArgs e)
         {
-            Proxer.getWatchlist(tb_proxerWatchlist.Text);
+            if(Proxer.getWatchlist(tb_proxerWatchlist.Text))
+            {
+                lb_status.Text=Proxer.list_animes.Count +" Animes wurden auf Proxer gefunden";
+                if(groupBox1.Enabled)
+                {//direct import
+                    Proxer.authenticate(tb_username.Text, tb_password.Text);
+
+                }
+                else
+                {//xmlExport not implemented
+                    Proxer.add();
+                }
+            }
+            else
+            {
+                lb_status.Text = "Error: Hast du die Richtige URL eingegeben und die Berechtigungen überprüft?";
+            }
+            
         }
     }
 }

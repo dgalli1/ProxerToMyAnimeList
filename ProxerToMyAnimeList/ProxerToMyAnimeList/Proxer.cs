@@ -12,9 +12,9 @@ namespace ProxerToMyAnimeList
     {
         private static string myUserId;
         private static string myUsername;
-        private static List<Animes> list_animes=new List<Animes>();
+        public static List<Animes> list_animes=new List<Animes>();
         private static string myProxerAnimeList;
-        private static MALAPI.API api;
+        public static MALAPI.API myAnimeListApi;
 
         public static Boolean getWatchlist(string ProxerAnimeListUrl)
         {
@@ -27,6 +27,10 @@ namespace ProxerToMyAnimeList
             // QuerySelectorAll extension method on HtmlNode
             var document = html.DocumentNode;
             var div=document.SelectSingleNode("//div[@id='pageMetaAjax']");
+            if(div==null)
+            {
+                return false;
+            }
             var inneruser=div.InnerText;
             myUsername=inneruser.Replace("Profil: ","").Replace(" - Proxer.Me","");
             var tableanimes = document.SelectNodes("//table[@id='box-table-a']");
@@ -60,17 +64,23 @@ namespace ProxerToMyAnimeList
             //todo performe a query for every single anime to get the japanese original title (i guess it will result in less errors)
         }
 
-        public static void export(Boolean xmlexport)
+        public static void exportXML()
         {
-            MALAPI.API AmimeListApi;
-            if (xmlexport)
+            
+                myAnimeListApi = new MALAPI.API();
+            
+
+        }
+        public static void authenticate(string username, string password)
+        {
+            myAnimeListApi = new MALAPI.API(username, password); //wow no check if the login works many mutch libary 5/7
+        }
+        public static void add()
+        {
+            foreach (Animes item in list_animes)
             {
-                AmimeListApi = new MALAPI.API();
+                item.AddtoMyAnimeList();
             }
-
-            //todo add to anime list
-
-            //new Animes(389925,)
         }
 
     }
