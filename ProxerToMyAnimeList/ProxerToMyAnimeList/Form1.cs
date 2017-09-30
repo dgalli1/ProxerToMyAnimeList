@@ -29,18 +29,18 @@ namespace ProxerToMyAnimeList
 
         private void bn_export_Click(object sender, EventArgs e)
         {
-            if(Proxer.getWatchlist(tb_proxerWatchlist.Text))
+            if(AnimeHandler.getWatchlist(tb_proxerWatchlist.Text))
             {
-                lb_status.Text=Proxer.list_animes.Count +" Animes wurden auf Proxer gefunden";
+                lb_status.Text=AnimeHandler.list_animes.Count +" Animes wurden auf Proxer gefunden";
                 if(groupBox1.Enabled)
                 {//direct import
 
-                    Proxer.authenticate(tb_username.Text, tb_password.Text);
-                    Proxer.add();
+                    AnimeHandler.authenticate(tb_username.Text, tb_password.Text);
+                    AnimeHandler.add();
                 }
                 else
                 {//xmlExport not implemented
-                    Proxer.authenticate("daYMAN007", "Openfimg12");
+                    AnimeHandler.authenticate("", "");
                 }
             }
             else
@@ -52,8 +52,7 @@ namespace ProxerToMyAnimeList
 
         private void bn_delete_wholeList_Click(object sender, EventArgs e)
         {
-            Proxer.authenticate(tb_username.Text, tb_password.Text);
-            Proxer.RemoveAll();
+            AnimeHandler.authenticate("daYMAN007", "");
         }
     }
 }

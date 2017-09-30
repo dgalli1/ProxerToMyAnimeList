@@ -8,7 +8,7 @@ using HtmlAgilityPack;
 
 namespace ProxerToMyAnimeList
 {
-   static class Proxer
+   static class AnimeHandler
     {
         private static string myUserId;
         private static string myUsername;
@@ -85,12 +85,8 @@ namespace ProxerToMyAnimeList
         }
         public static async void RemoveAll()
         {
-            MALAPI.Dto.UserList userlist= await myAnimeListApi.GetUserListAsync();
-            foreach (MALAPI.Dto.UserAnime item in userlist.Animes)
-            {
-                
-                var wtf=await myAnimeListApi.DeleteAnime(item.SeriesId);
-            }
+            MALAPI.Dto.UserList userlist = await myAnimeListApi.GetUserListAsync() ;
+            var test=userlist.Animes;
         }
 
     }

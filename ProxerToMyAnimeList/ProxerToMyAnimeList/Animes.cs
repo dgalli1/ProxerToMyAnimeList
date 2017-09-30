@@ -57,7 +57,7 @@ namespace ProxerToMyAnimeList
         }
         public async void AddtoMyAnimeList()
         {
-            MALAPI.Dto.SearchResult results=  await Proxer.myAnimeListApi.SearchForAsync(myNameDeu);
+            MALAPI.Dto.SearchResult results=  await AnimeHandler.myAnimeListApi.SearchForAsync(myNameDeu);
             var entries=results.Entries;
             Boolean found = false;
             foreach (var item in entries)
@@ -73,7 +73,7 @@ namespace ProxerToMyAnimeList
                     Anime.EnableDiscussion = 0;
                     Anime.EnableRewatching = 0;
                     Anime.RewatchValue = 0;
-                    var add_result = await Proxer.myAnimeListApi.AddAnime(Anime, item.Id);
+                    var add_result = await AnimeHandler.myAnimeListApi.AddAnime(Anime, item.Id);
                     found = true;
                 }
             }
