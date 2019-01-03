@@ -16,16 +16,19 @@ namespace ProxerToMyAnimeList
         private static string myProxerAnimeList;
         public static MALAPI.API myAnimeListApi;
         public static string today = "09302017";
+        public static List<Animes> not_found = new List<Animes>();
+        public static MALAPI.Dto.UserList myuserlist;
+        public static Boolean overwritte=false;
 
         public static Boolean getWatchlist(string ProxerAnimeListUrl)
-        {
+        { 
+
+            //fetch without api key from proxer 
             myProxerAnimeList = ProxerAnimeListUrl;
             WebClient wc = new WebClient();
            string str_html =wc.DownloadString(ProxerAnimeListUrl);
             var html = new HtmlDocument();
             html.LoadHtml(str_html);
-            // Fizzler for HtmlAgilityPack is implemented as the 
-            // QuerySelectorAll extension method on HtmlNode
             var document = html.DocumentNode;
             var div=document.SelectSingleNode("//div[@id='pageMetaAjax']");
             if(div==null)
@@ -62,22 +65,31 @@ namespace ProxerToMyAnimeList
             return false;
             
             //todo parse proxer watchlist maybe i get a api key they  will talk about the api key next week
-            //todo performe a query for every single anime to get the japanese original title (i guess it will result in less errors)
         }
 
         public static void exportXML()
         {
             
-                myAnimeListApi = new MALAPI.API();
             
 
         }
-        public static void authenticate(string username, string password)
+        public static bool authenticate(string username, string password)
         {
-            myAnimeListApi = new MALAPI.API(username, password); //wow no check if the login works many mutch libary 5/7
+            try
+            {
+                myAnimeListApi = new MALAPI.API(username, password); //now throws exception
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+            return false;
         }
-        public static void add()
+        public static async void Add()
         {
+            myuserlist = await myAnimeListApi.GetUserListAsync();
+
             foreach (Animes item in list_animes)
             {
                 item.AddtoMyAnimeList();
@@ -85,8 +97,12 @@ namespace ProxerToMyAnimeList
         }
         public static async void RemoveAll()
         {
-            MALAPI.Dto.UserList userlist = await myAnimeListApi.GetUserListAsync() ;
-            var test=userlist.Animes;
+            foreach (MALAPI.Dto.UserAnime item in myuserlist.Animes)
+            {
+
+                var wtf = await myAnimeListApi.DeleteAnime(item.SeriesId);
+            }
+
         }
 
     }

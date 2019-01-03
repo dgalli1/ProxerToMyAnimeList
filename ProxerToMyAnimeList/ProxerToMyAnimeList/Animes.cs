@@ -1,5 +1,8 @@
-﻿using MALAPI;
+﻿using HtmlAgilityPack;
+using MALAPI;
 using System;
+using System.Collections.Generic;
+using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -11,7 +14,9 @@ namespace ProxerToMyAnimeList
         private string myAnimeListID;
         private string myNameDeu;
         private string myEpisodeWatchedTill;
-        private string myEpisodeTotal; 
+        private string myEpisodeTotal;
+        private Boolean myfound;
+        private List<MALAPI.Dto.SearchResult> mySearchResults = new List<MALAPI.Dto.SearchResult>();
 
         private enum EnumMyStatus
         {
@@ -77,11 +82,58 @@ namespace ProxerToMyAnimeList
                     found = true;
                 }
             }
-            if(!found)
-            {
-                Console.WriteLine("fml");
-            }
+
             
+        }
+        private async void SearchOnMyAnimeListAsync(string search)
+        {
+            MALAPI.Dto.SearchResult results = await AnimeHandler.myAnimeListApi.SearchForAsync(search);
+            var entries = results.Entries;
+            foreach (var item in entries)
+            {
+                if (item.EnglishTitle.ToLower() == search.ToLower() || item.Title.ToLower() == search.ToLower() || item.Synonyms.ToLower() == search.ToLower()) //this is why we need the japanese Title
+                {
+                    var Anime = new MALAPI.Dto.Anime();
+                    myAnimeListID = item.Id+"";
+                    Anime.Status = myStatus.ToString();
+                    Anime.Episode = Int32.Parse(myEpisodeWatchedTill);
+                    Anime.DateStart = DateTime.Today;
+                    Anime.DateEnd = DateTime.Today;
+                    Anime.Priority = 0;
+                    Anime.EnableDiscussion = 0;
+                    Anime.EnableRewatching = 0;
+                    Anime.RewatchValue = 0;
+                    var add_result = await AnimeHandler.myAnimeListApi.AddAnime(Anime, item.Id);
+                    myfound = true;
+                }
+            }
+            if(!myfound)
+            {
+                //todo get japanese Title from Proxer
+                myfound = true;
+                WebClient wc = new WebClient();
+                string str_html = wc.DownloadString(getlink());
+                var html = new HtmlDocument();
+                html.LoadHtml(str_html);
+                var document = html.DocumentNode;
+                var tablecontents = document.SelectNodes("//table[@class='details'].//tbody.//tr.//td");
+                if (tablecontents == null)
+                {
+                    AnimeHandler.not_found.Add(this);
+                    return;
+                }
+                Console.WriteLine(tablecontents.Count);
+                SearchOnMyAnimeListAsync("");
+            }
+            if(myAnimeListID=="")
+            {
+                AnimeHandler.not_found.Add(this);
+            }
+
+        }
+        private string getlink()
+        {
+            return @"https://proxer.me/info/" + "myProxID";
         }
         public void generateMyAnimeListXML()
         {

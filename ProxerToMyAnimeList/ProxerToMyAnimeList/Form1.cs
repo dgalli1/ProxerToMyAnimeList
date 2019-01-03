@@ -31,15 +31,21 @@ namespace ProxerToMyAnimeList
         {
             if(AnimeHandler.getWatchlist(tb_proxerWatchlist.Text))
             {
+                AnimeHandler.overwritte = cb_overwritte.Checked;
                 lb_status.Text=AnimeHandler.list_animes.Count +" Animes wurden auf Proxer gefunden";
                 if(groupBox1.Enabled)
                 {//direct import
 
-                    AnimeHandler.authenticate(tb_username.Text, tb_password.Text);
-                    AnimeHandler.add();
+                    if(!AnimeHandler.authenticate(tb_username.Text, tb_password.Text))
+                    {
+                        lb_status.Text = "Error: Die Anmeldung auf MyAnimeList ist fehlgeschlagen. Falsches Passwort?";
+                        return;
+                    }
+                    AnimeHandler.Add();
                 }
                 else
                 {//xmlExport not implemented
+                    //usless because you have to enter your login anyways to make search request over the api
                     AnimeHandler.authenticate("", "");
                 }
             }
@@ -53,6 +59,11 @@ namespace ProxerToMyAnimeList
         private void bn_delete_wholeList_Click(object sender, EventArgs e)
         {
             AnimeHandler.authenticate("daYMAN007", "");
+        }
+
+        private void cb_overwritte_CheckedChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }

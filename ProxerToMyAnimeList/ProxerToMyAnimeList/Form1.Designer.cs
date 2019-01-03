@@ -30,7 +30,6 @@
         {
             this.tb_proxerWatchlist = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
-            this.cb_directImport = new System.Windows.Forms.CheckBox();
             this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
             this.tb_password = new System.Windows.Forms.TextBox();
             this.tb_username = new System.Windows.Forms.TextBox();
@@ -40,6 +39,7 @@
             this.bn_export = new System.Windows.Forms.Button();
             this.lb_status = new System.Windows.Forms.Label();
             this.bn_delete_wholeList = new System.Windows.Forms.Button();
+            this.cb_overwritte = new System.Windows.Forms.CheckBox();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -58,17 +58,6 @@
             this.label1.Size = new System.Drawing.Size(107, 13);
             this.label1.TabIndex = 1;
             this.label1.Text = "Proxer Account Seite";
-            // 
-            // cb_directImport
-            // 
-            this.cb_directImport.AutoSize = true;
-            this.cb_directImport.Location = new System.Drawing.Point(47, 98);
-            this.cb_directImport.Name = "cb_directImport";
-            this.cb_directImport.Size = new System.Drawing.Size(109, 17);
-            this.cb_directImport.TabIndex = 2;
-            this.cb_directImport.Text = "Direkt Importieren";
-            this.cb_directImport.UseVisualStyleBackColor = true;
-            this.cb_directImport.CheckedChanged += new System.EventHandler(this.cb_directImport_CheckedChanged);
             // 
             // tb_password
             // 
@@ -92,7 +81,6 @@
             this.groupBox1.Controls.Add(this.label3);
             this.groupBox1.Controls.Add(this.tb_password);
             this.groupBox1.Controls.Add(this.tb_username);
-            this.groupBox1.Enabled = false;
             this.groupBox1.Location = new System.Drawing.Point(47, 132);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(326, 100);
@@ -147,15 +135,26 @@
             this.bn_delete_wholeList.UseVisualStyleBackColor = true;
             this.bn_delete_wholeList.Click += new System.EventHandler(this.bn_delete_wholeList_Click);
             // 
+            // cb_overwritte
+            // 
+            this.cb_overwritte.AutoSize = true;
+            this.cb_overwritte.Location = new System.Drawing.Point(47, 78);
+            this.cb_overwritte.Name = "cb_overwritte";
+            this.cb_overwritte.Size = new System.Drawing.Size(213, 17);
+            this.cb_overwritte.TabIndex = 9;
+            this.cb_overwritte.Text = "Die List von myAnimeList überschreiben";
+            this.cb_overwritte.UseVisualStyleBackColor = true;
+            this.cb_overwritte.CheckedChanged += new System.EventHandler(this.cb_overwritte_CheckedChanged);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(795, 321);
+            this.Controls.Add(this.cb_overwritte);
             this.Controls.Add(this.bn_delete_wholeList);
             this.Controls.Add(this.lb_status);
             this.Controls.Add(this.bn_export);
-            this.Controls.Add(this.cb_directImport);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.tb_proxerWatchlist);
@@ -173,7 +172,6 @@
 
         private System.Windows.Forms.TextBox tb_proxerWatchlist;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.CheckBox cb_directImport;
         private System.ComponentModel.BackgroundWorker backgroundWorker1;
         private System.Windows.Forms.TextBox tb_password;
         private System.Windows.Forms.TextBox tb_username;
@@ -183,6 +181,7 @@
         private System.Windows.Forms.Button bn_export;
         private System.Windows.Forms.Label lb_status;
         private System.Windows.Forms.Button bn_delete_wholeList;
+        private System.Windows.Forms.CheckBox cb_overwritte;
     }
 }
 
